@@ -1,3 +1,32 @@
 <resources>
     <string name="app_name">GymLog</string>
+
+    <!--screen titles it shown in the top app bar-->
+    <string name="screen_home">GymLog</string>
+    <string name="screen_history">Workout history</string>
+    <string name="screen_detail">Workout details</string>
+    <string name="screen_add_edit">Add or edit workout</string>
+    <string name="screen_live_session">Live session</string>
+    <string name="screen_camera">Progress photo</string>
+    <string name="screen_settings">Settings</string>
+
+    <!--bottom navigation labels-->
+    <string name="nav_home">Home</string>
+    <string name="nav_history">History</string>
+    <string name="nav_settings">Settings</string>
+
+    <!--buttons and accessibility labels-->
+    <string name="back_button">Back</string>
+    <string name="start_workout">Start workout</string>
+    <string name="add_workout">Add workout</string>
+    <string name="open_sample_workout">Open sample workout</string>
+    <string name="edit_workout">Edit workout</string>
+    <string name="add_photo">Add progress photo</string>
+    <string name="save">Save</string>
+    <string name="cancel">Cancel</string>
+    <string name="finish_session">Finish session</string>
+    <string name="done">Done</string>
+
+    <!--temporary text used by the placeholder screens-->
+    <string name="placeholder_body">This screen is a placeholder. Its real content is added in a later step.</string>
 </resources>
