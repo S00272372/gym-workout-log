@@ -27,6 +27,14 @@
     <string name="finish_session">Finish session</string>
     <string name="done">Done</string>
 
+    <!--real screens-->
+    <string name="workouts_last_7_days">Workouts in the last 7 days: %1$d</string>
+    <string name="recent_workouts">Recent workouts</string>
+    <string name="no_workouts">No workouts yet. Tap Add workout to log your first one.</string>
+    <string name="workout_name_label">Workout name</string>
+    <string name="workout_notes_label">Notes (optional)</string>
+    <string name="name_required">Please enter a workout name</string>
+
     <!--temporary text used by the placeholder screens-->
     <string name="placeholder_body">This screen is a placeholder. Its real content is added in a later step.</string>
 </resources>

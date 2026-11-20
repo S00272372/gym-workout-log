@@ -22,10 +22,12 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
 import com.example.gymlog.ui.screens.AddEditWorkoutScreen
 import com.example.gymlog.ui.screens.CameraScreen
 import com.example.gymlog.ui.screens.HistoryScreen
@@ -55,17 +57,25 @@ fun GymLogApp(
 ) {
     //observe the current back stack entry so the app bar follows navigation
     val backStackEntry by navController.currentBackStackEntryAsState()
+    //routes with arguments look like Detail/{workoutId} so cut off everything after the name
     val currentScreen = GymLogScreen.valueOf(
-        backStackEntry?.destination?.route ?: GymLogScreen.Home.name
+        (backStackEntry?.destination?.route ?: GymLogScreen.Home.name)
+            .substringBefore("/")
+            .substringBefore("?")
     )
     val isTopLevel = topLevelDestinations.any { it.screen == currentScreen }
+
+    //opens the detail screen for one workout and passes its id in the route
+    val openDetail: (Long) -> Unit = { workoutId ->
+        navController.navigate("${GymLogScreen.Detail.name}/$workoutId")
+    }
 
     Scaffold(
         topBar = {
             TopAppBar(
                 title = { Text(stringResource(currentScreen.title)) },
                 navigationIcon = {
-                    //only show the Up arrow on screens that are not top level
+                    //only show the up arrow on screens that are not top level
                     if (!isTopLevel) {
                         IconButton(onClick = { navController.navigateUp() }) {
                             Icon(
@@ -110,15 +120,19 @@ fun GymLogApp(
             composable(route = GymLogScreen.Home.name) {
                 HomeScreen(
                     onStartWorkout = { navController.navigate(GymLogScreen.LiveSession.name) },
-                    onAddWorkout = { navController.navigate(GymLogScreen.AddEdit.name) }
+                    onAddWorkout = { navController.navigate(GymLogScreen.AddEdit.name) },
+                    onOpenWorkout = openDetail
                 )
             }
             composable(route = GymLogScreen.History.name) {
                 HistoryScreen(
-                    onOpenWorkout = { navController.navigate(GymLogScreen.Detail.name) }
+                    onOpenWorkout = openDetail
                 )
             }
-            composable(route = GymLogScreen.Detail.name) {
+            composable(
+                route = "${GymLogScreen.Detail.name}/{workoutId}",
+                arguments = listOf(navArgument("workoutId") { type = NavType.LongType })
+            ) {
                 WorkoutDetailScreen(
                     onEditWorkout = { navController.navigate(GymLogScreen.AddEdit.name) },
                     onAddPhoto = { navController.navigate(GymLogScreen.Camera.name) }

@@ -44,34 +44,6 @@ private fun PlaceholderScreen(
 }
 
 @Composable
-fun HomeScreen(
-    onStartWorkout: () -> Unit,
-    onAddWorkout: () -> Unit,
-    modifier: Modifier = Modifier
-) {
-    PlaceholderScreen(R.string.screen_home, modifier) {
-        Button(onClick = onStartWorkout) {
-            Text(stringResource(R.string.start_workout))
-        }
-        OutlinedButton(onClick = onAddWorkout) {
-            Text(stringResource(R.string.add_workout))
-        }
-    }
-}
-
-@Composable
-fun HistoryScreen(
-    onOpenWorkout: () -> Unit,
-    modifier: Modifier = Modifier
-) {
-    PlaceholderScreen(R.string.screen_history, modifier) {
-        Button(onClick = onOpenWorkout) {
-            Text(stringResource(R.string.open_sample_workout))
-        }
-    }
-}
-
-@Composable
 fun WorkoutDetailScreen(
     onEditWorkout: () -> Unit,
     onAddPhoto: () -> Unit,
@@ -83,22 +55,6 @@ fun WorkoutDetailScreen(
         }
         OutlinedButton(onClick = onAddPhoto) {
             Text(stringResource(R.string.add_photo))
-        }
-    }
-}
-
-@Composable
-fun AddEditWorkoutScreen(
-    onSave: () -> Unit,
-    onCancel: () -> Unit,
-    modifier: Modifier = Modifier
-) {
-    PlaceholderScreen(R.string.screen_add_edit, modifier) {
-        Button(onClick = onSave) {
-            Text(stringResource(R.string.save))
-        }
-        OutlinedButton(onClick = onCancel) {
-            Text(stringResource(R.string.cancel))
         }
     }
 }
