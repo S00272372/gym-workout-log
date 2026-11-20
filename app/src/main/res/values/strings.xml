@@ -35,6 +35,22 @@
     <string name="workout_notes_label">Notes (optional)</string>
     <string name="name_required">Please enter a workout name</string>
 
+    <!--sets, detail and delete-->
+    <string name="sets_title">Sets</string>
+    <string name="no_sets">No sets recorded</string>
+    <string name="set_summary">%1$s: %2$d reps x %3$s kg</string>
+    <string name="exercise_label">Exercise</string>
+    <string name="reps_label">Reps</string>
+    <string name="weight_label">Weight (kg)</string>
+    <string name="add_set">Add set</string>
+    <string name="remove_set">Remove set</string>
+    <string name="set_error">Enter an exercise and a whole number of reps</string>
+    <string name="delete_workout">Delete workout</string>
+    <string name="delete_title">Delete this workout?</string>
+    <string name="delete_message">This also deletes its sets. This cannot be undone.</string>
+    <string name="delete_confirm">Delete</string>
+    <string name="workout_not_found">Workout not found</string>
+
     <!--temporary text used by the placeholder screens-->
     <string name="placeholder_body">This screen is a placeholder. Its real content is added in a later step.</string>
 </resources>

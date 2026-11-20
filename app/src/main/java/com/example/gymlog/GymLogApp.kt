@@ -134,11 +134,23 @@ fun GymLogApp(
                 arguments = listOf(navArgument("workoutId") { type = NavType.LongType })
             ) {
                 WorkoutDetailScreen(
-                    onEditWorkout = { navController.navigate(GymLogScreen.AddEdit.name) },
-                    onAddPhoto = { navController.navigate(GymLogScreen.Camera.name) }
+                    onEditWorkout = { workoutId ->
+                        navController.navigate("${GymLogScreen.AddEdit.name}?workoutId=$workoutId")
+                    },
+                    onAddPhoto = { navController.navigate(GymLogScreen.Camera.name) },
+                    onDeleted = { navController.popBackStack() }
                 )
             }
-            composable(route = GymLogScreen.AddEdit.name) {
+            //workoutId is optional: -1 means add a new workout and anything else means edit
+            composable(
+                route = "${GymLogScreen.AddEdit.name}?workoutId={workoutId}",
+                arguments = listOf(
+                    navArgument("workoutId") {
+                        type = NavType.LongType
+                        defaultValue = -1L
+                    }
+                )
+            ) {
                 AddEditWorkoutScreen(
                     onSave = { navController.popBackStack() },
                     onCancel = { navController.popBackStack() }

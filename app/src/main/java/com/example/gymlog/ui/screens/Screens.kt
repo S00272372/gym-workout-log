@@ -42,23 +42,6 @@ private fun PlaceholderScreen(
         actions()
     }
 }
-
-@Composable
-fun WorkoutDetailScreen(
-    onEditWorkout: () -> Unit,
-    onAddPhoto: () -> Unit,
-    modifier: Modifier = Modifier
-) {
-    PlaceholderScreen(R.string.screen_detail, modifier) {
-        Button(onClick = onEditWorkout) {
-            Text(stringResource(R.string.edit_workout))
-        }
-        OutlinedButton(onClick = onAddPhoto) {
-            Text(stringResource(R.string.add_photo))
-        }
-    }
-}
-
 @Composable
 fun LiveSessionScreen(
     onFinishSession: () -> Unit,
