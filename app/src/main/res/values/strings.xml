@@ -56,4 +56,20 @@
     <string name="theme_system">Follow system</string>
     <string name="theme_light">Light</string>
     <string name="theme_dark">Dark</string>
+
+    <!--reminders-->
+    <string name="reminder_channel_name">Workout reminders</string>
+    <string name="reminder_channel_description">Reminds you to log your workouts</string>
+    <string name="reminder_title">Time to train</string>
+    <string name="reminder_text_none">You have not logged a workout in the last 7 days. Tap to open GymLog.</string>
+    <string name="reminder_text_count">Workouts in the last 7 days: %1$d. Keep it going!</string>
+    <string name="reminders_title">Reminders</string>
+    <string name="reminder_switch_label">Daily workout reminder at 18:00</string>
+    <string name="reminder_test_button">Send test reminder in 10 seconds</string>
+    <string name="reminder_status_label">Test reminder: %1$s</string>
+    <string name="work_status_waiting">waiting</string>
+    <string name="work_status_running">running</string>
+    <string name="work_status_sent">sent</string>
+    <string name="work_status_failed">failed</string>
+    <string name="work_status_cancelled">cancelled</string>
 </resources>

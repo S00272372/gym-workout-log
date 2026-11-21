@@ -12,7 +12,12 @@ object AppViewModelProvider {
     val Factory = viewModelFactory {
         initializer { HomeViewModel(gymLogApplication().workoutRepository) }
         initializer { HistoryViewModel(gymLogApplication().workoutRepository) }
-        initializer { SettingsViewModel(gymLogApplication().settingsRepository) }
+        initializer {
+            SettingsViewModel(
+                gymLogApplication().settingsRepository,
+                gymLogApplication().reminderScheduler
+            )
+        }
         //the saved state handle holds the navigation arguments such as workoutId
         initializer {
             DetailViewModel(this.createSavedStateHandle(), gymLogApplication().workoutRepository)
