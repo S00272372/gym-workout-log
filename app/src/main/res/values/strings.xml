@@ -53,4 +53,8 @@
 
     <!--temporary text used by the placeholder screens-->
     <string name="placeholder_body">This screen is a placeholder. Its real content is added in a later step.</string>
+    <string name="theme_title">Theme</string>
+    <string name="theme_system">Follow system</string>
+    <string name="theme_light">Light</string>
+    <string name="theme_dark">Dark</string>
 </resources>

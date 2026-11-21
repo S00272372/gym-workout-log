@@ -65,8 +65,3 @@ fun CameraScreen(
         }
     }
 }
-
-@Composable
-fun SettingsScreen(modifier: Modifier = Modifier) {
-    PlaceholderScreen(R.string.screen_settings, modifier)
-}

@@ -3,6 +3,8 @@ package com.example.gymlog.ui.screens
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -27,6 +29,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.gymlog.R
+import com.example.gymlog.data.WorkoutWithSets
 import com.example.gymlog.ui.viewmodel.AppViewModelProvider
 import com.example.gymlog.ui.viewmodel.DetailViewModel
 
@@ -36,6 +39,7 @@ fun WorkoutDetailScreen(
     onAddPhoto: () -> Unit,
     onDeleted: () -> Unit,
     modifier: Modifier = Modifier,
+    isWide: Boolean = false,
     viewModel: DetailViewModel = viewModel(factory = AppViewModelProvider.Factory)
 ) {
     val uiState by viewModel.uiState.collectAsState()
@@ -58,7 +62,40 @@ fun WorkoutDetailScreen(
                 )
             }
         }
+    } else if (isWide) {
+        //wide window: info and buttons on the left and the sets on the right
+        Row(
+            modifier = modifier
+                .fillMaxSize()
+                .padding(16.dp),
+            horizontalArrangement = Arrangement.spacedBy(24.dp)
+        ) {
+            Column(
+                modifier = Modifier
+                    .weight(1f)
+                    .fillMaxHeight()
+                    .verticalScroll(rememberScrollState()),
+                verticalArrangement = Arrangement.spacedBy(16.dp)
+            ) {
+                DetailInfo(details)
+                DetailButtons(
+                    onEdit = { onEditWorkout(details.workout.id) },
+                    onAddPhoto = onAddPhoto,
+                    onDelete = { showDeleteDialog = true }
+                )
+            }
+            Column(
+                modifier = Modifier
+                    .weight(1f)
+                    .fillMaxHeight()
+                    .verticalScroll(rememberScrollState()),
+                verticalArrangement = Arrangement.spacedBy(16.dp)
+            ) {
+                DetailSets(details)
+            }
+        }
     } else {
+        //compact window: everything in one scrolling column
         Column(
             modifier = modifier
                 .fillMaxSize()
@@ -66,61 +103,13 @@ fun WorkoutDetailScreen(
                 .padding(16.dp),
             verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
-            Text(
-                text = details.workout.name,
-                style = MaterialTheme.typography.headlineMedium
+            DetailInfo(details)
+            DetailSets(details)
+            DetailButtons(
+                onEdit = { onEditWorkout(details.workout.id) },
+                onAddPhoto = onAddPhoto,
+                onDelete = { showDeleteDialog = true }
             )
-            Text(
-                text = formatDate(details.workout.dateMillis),
-                style = MaterialTheme.typography.bodyLarge,
-                color = MaterialTheme.colorScheme.onSurfaceVariant
-            )
-            if (details.workout.notes.isNotBlank()) {
-                Text(
-                    text = details.workout.notes,
-                    style = MaterialTheme.typography.bodyLarge
-                )
-            }
-            Text(
-                text = stringResource(R.string.sets_title),
-                style = MaterialTheme.typography.titleLarge
-            )
-            if (details.sets.isEmpty()) {
-                Text(
-                    text = stringResource(R.string.no_sets),
-                    style = MaterialTheme.typography.bodyLarge
-                )
-            } else {
-                details.sets.forEach { set ->
-                    Text(
-                        text = stringResource(
-                            R.string.set_summary,
-                            set.exerciseName,
-                            set.reps,
-                            set.weightKg.toString()
-                        ),
-                        style = MaterialTheme.typography.bodyLarge
-                    )
-                }
-            }
-            Button(
-                onClick = { onEditWorkout(details.workout.id) },
-                modifier = Modifier.fillMaxWidth()
-            ) {
-                Text(stringResource(R.string.edit_workout))
-            }
-            OutlinedButton(onClick = onAddPhoto, modifier = Modifier.fillMaxWidth()) {
-                Text(stringResource(R.string.add_photo))
-            }
-            OutlinedButton(
-                onClick = { showDeleteDialog = true },
-                colors = ButtonDefaults.outlinedButtonColors(
-                    contentColor = MaterialTheme.colorScheme.error
-                ),
-                modifier = Modifier.fillMaxWidth()
-            ) {
-                Text(stringResource(R.string.delete_workout))
-            }
         }
     }
 
@@ -146,5 +135,76 @@ fun WorkoutDetailScreen(
                 }
             }
         )
+    }
+}
+
+//name, date and notes
+@Composable
+private fun DetailInfo(details: WorkoutWithSets) {
+    Text(
+        text = details.workout.name,
+        style = MaterialTheme.typography.headlineMedium
+    )
+    Text(
+        text = formatDate(details.workout.dateMillis),
+        style = MaterialTheme.typography.bodyLarge,
+        color = MaterialTheme.colorScheme.onSurfaceVariant
+    )
+    if (details.workout.notes.isNotBlank()) {
+        Text(
+            text = details.workout.notes,
+            style = MaterialTheme.typography.bodyLarge
+        )
+    }
+}
+
+//the heading and the list of sets
+@Composable
+private fun DetailSets(details: WorkoutWithSets) {
+    Text(
+        text = stringResource(R.string.sets_title),
+        style = MaterialTheme.typography.titleLarge
+    )
+    if (details.sets.isEmpty()) {
+        Text(
+            text = stringResource(R.string.no_sets),
+            style = MaterialTheme.typography.bodyLarge
+        )
+    } else {
+        details.sets.forEach { set ->
+            Text(
+                text = stringResource(
+                    R.string.set_summary,
+                    set.exerciseName,
+                    set.reps,
+                    set.weightKg.toString()
+                ),
+                style = MaterialTheme.typography.bodyLarge
+            )
+        }
+    }
+}
+
+//edit, photo and delete buttons
+@Composable
+private fun DetailButtons(
+    onEdit: () -> Unit,
+    onAddPhoto: () -> Unit,
+    onDelete: () -> Unit
+) {
+    Button(onClick = onEdit, modifier = Modifier.fillMaxWidth()) {
+        Text(stringResource(R.string.edit_workout))
+    }
+    OutlinedButton(onClick = onAddPhoto, modifier = Modifier.fillMaxWidth()) {
+        Text(stringResource(R.string.add_photo))
+    }
+    OutlinedButton(
+        onClick = onDelete,
+        colors = ButtonDefaults.outlinedButtonColors(
+            contentColor = MaterialTheme.colorScheme.error
+        ),
+        modifier = Modifier.fillMaxWidth()
+    ) {
+        Text(stringResource(R.string.delete_workout))
     }
 }
